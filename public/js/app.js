@@ -46,16 +46,7 @@ async function initApp() {
   document.getElementById('loadingOverlay')?.classList.add('hidden');
 
   renderAll();
-
-  document.getElementById('btnSaveVersion')?.addEventListener('click', async () => {
-    const label = prompt('Nombre de la versión:');
-    if (!label) return;
-    const result = await createVersion(label);
-    if (result?.success) {
-      alert(`Versión "${result.label}" guardada.`);
-      renderVersions();
-    }
-  });
+  setupSaveButton();
 
   window.addEventListener('beforeunload', (e) => {
     if (appState.hasUnsavedChanges) {

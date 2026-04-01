@@ -15,14 +15,11 @@
 <div class="app">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <!-- Rendered by sidebar.js -->
-  </aside>
+  <aside class="sidebar" id="sidebar"></aside>
 
   <!-- MAIN CONTENT -->
   <main class="main">
 
-    <!-- Toolbar header -->
     <div class="toolbar">
       <div class="toolbar-inner">
         <div class="toolbar-title">
@@ -60,48 +57,77 @@
           <label for="projectVersion">Versión de trabajo</label>
           <input type="text" id="projectVersion" class="form-control" placeholder="Ej: Draft v1, Pre-submit...">
         </div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:8px 0;">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:8px;">Versiones guardadas</h3>
+        <div id="savedVersionsContainer"></div>
+        <button class="btn btn-secondary" id="downloadJsonBtn" style="margin-top:12px;">Guardar versión</button>
       </div>
     </div>
 
     <!-- Question config shell (modules 1+) -->
     <div class="question-config-shell" id="questionConfigShell" style="display:none">
-      <div id="questionConfigContent">
-        <!-- Rendered by question-config.js -->
+
+      <!-- Question general config -->
+      <div class="question-config-card">
+        <div class="card-header">
+          <h2 id="questionConfigTitle">Configuración de pregunta</h2>
+        </div>
+        <div class="config-grid">
+          <div class="form-group">
+            <label for="questionCode">Código</label>
+            <input type="text" id="questionCode" class="form-control" placeholder="1.1">
+          </div>
+          <div class="form-group">
+            <label for="questionMaxScore">Puntuación máx.</label>
+            <input type="number" id="questionMaxScore" class="form-control" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="questionName">Título</label>
+            <input type="text" id="questionName" class="form-control" placeholder="Título de la pregunta...">
+          </div>
+          <div class="form-group">
+            <label for="questionThreshold">Umbral mínimo</label>
+            <input type="number" id="questionThreshold" class="form-control" min="0" step="1">
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label for="questionPrompt">Instrucción / Prompt</label>
+            <textarea id="questionPrompt" class="form-control" rows="3" placeholder="Instrucción para el evaluador..."></textarea>
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label for="scoreCaps">Limitaciones de puntuación (una por línea)</label>
+            <textarea id="scoreCaps" class="form-control" rows="2" placeholder="Ej: Puntuación máxima 10. Por debajo de 6, no pasa..."></textarea>
+          </div>
+        </div>
+        <div class="rules-list">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <h3 style="font-size:13px;font-weight:600;">Reglas generales</h3>
+          </div>
+          <div id="generalRulesContainer"></div>
+        </div>
       </div>
 
       <!-- Criteria shell -->
-      <div class="criteria-shell" id="criteriaShell">
+      <div class="criteria-shell">
         <div class="section-header">
           <h3>Criterios de evaluación</h3>
-          <button class="btn btn-small" id="btnAddCriteria">+ Añadir criterio</button>
         </div>
-        <div id="criteriaList">
-          <!-- Rendered by criteria.js -->
-        </div>
+        <div id="miniPointsContainer" style="padding:0 0 8px;"></div>
       </div>
 
-      <!-- Scoring panel -->
-      <div class="scoring-panel" id="scoringPanel">
-        <div class="section-header">
-          <h3>Puntuación</h3>
-        </div>
-        <div id="scoringContent">
-          <!-- Rendered by scoring.js -->
-        </div>
-      </div>
     </div>
 
   </main>
 
-  <!-- INSPECTOR (versions panel) -->
+  <!-- INSPECTOR: Scoring + Versions -->
   <aside class="inspector">
     <div class="inspector-header">
-      <h3>Versiones</h3>
-      <button class="btn btn-small" id="btnSaveVersion">Guardar versión</button>
+      <h3>Puntuación</h3>
+      <div id="totalPercent" style="font-size:13px;color:var(--active-color);font-weight:700;">-</div>
     </div>
-    <div id="versionsList">
-      <!-- Rendered by versions.js -->
+    <div style="padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted);">
+      Total: <strong id="totalScore">- / -</strong>
     </div>
+    <div id="scoringPanel" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
   </aside>
 
 </div>
