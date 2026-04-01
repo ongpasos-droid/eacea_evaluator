@@ -47,6 +47,7 @@ async function initApp() {
 
   renderAll();
   setupSaveButton();
+  setupExportButton();
 
   window.addEventListener('beforeunload', (e) => {
     if (appState.hasUnsavedChanges) {
@@ -56,6 +57,15 @@ async function initApp() {
   });
 
   console.log('EACEA Evaluator: Ready');
+}
+
+function setupExportButton() {
+  const btn = document.getElementById('btnExport');
+  if (!btn || btn.dataset.bound) return;
+  btn.dataset.bound = 'true';
+  btn.addEventListener('click', () => {
+    window.open('/api/project/export/json', '_blank');
+  });
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
