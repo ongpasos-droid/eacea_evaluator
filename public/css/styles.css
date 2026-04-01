@@ -362,6 +362,29 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   font-weight: 500;
 }
 
+/* ===== FIELD WRAPPER ===== */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+/* ===== SAVE STATUS ===== */
+#saveStatus { transition: color 0.3s; }
+#saveStatus.status-dirty { color: #f59e0b; }
+#saveStatus.status-saved { color: #22c55e; }
+#saveStatus.status-autosaved { color: var(--muted); }
+#saveStatus.status-error { color: #ef4444; }
+
+/* ===== VALIDATION WARNING ===== */
+.validation-warning {
+  font-size: 11px;
+  color: #f59e0b;
+  padding: 4px 8px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+  grid-column: 1 / -1;
+}
+
 /* ===== QUESTION CONFIG CONTENT ===== */
 .question-config-card {
   background: var(--surface);

@@ -44,14 +44,17 @@ function renderScoring() {
   document.querySelectorAll('.score-input').forEach(input => {
     input.addEventListener('input', (e) => {
       const ci = parseInt(e.target.dataset.ci);
-      const value = parseFloat(e.target.value) || 0;
       const q = getActiveQuestion();
       if (q?.miniPoints?.[ci]) {
+        const maxScore = parseFloat(q.miniPoints[ci].maxScore) || 1;
+        let value = parseFloat(e.target.value) || 0;
+        value = Math.max(0, Math.min(value, maxScore));
+        if (parseFloat(e.target.value) !== value) e.target.value = value;
         q.miniPoints[ci].score = value;
         markDirty();
         recalculateTotals();
         const badge = document.querySelector(`.criterion-item[data-criterion-index="${ci}"] .criterion-badge`);
-        if (badge) badge.textContent = `${value} / ${q.miniPoints[ci].maxScore || 1}`;
+        if (badge) badge.textContent = `${value} / ${maxScore}`;
       }
     });
   });

@@ -23,11 +23,12 @@ async function saveCurrentProject() {
     const result = await response.json();
     markClean();
     const t = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-    updateSaveStatus(`Guardado a las ${t}`);
+    updateSaveStatus(`Guardado a las ${t}`, 'saved');
     console.log('Project saved at', result.updated_at);
     return true;
   } catch (error) {
     console.error('Failed to save project:', error);
+    updateSaveStatus('Error al guardar', 'error');
     return false;
   }
 }

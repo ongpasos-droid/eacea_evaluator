@@ -76,7 +76,7 @@ function escapeAttr(str) {
 
 function bindCriteriaEvents() {
   document.querySelectorAll('.criterion-f').forEach(el => {
-    el.addEventListener('input', (e) => {
+    const handler = (e) => {
       const ci = parseInt(e.target.dataset.ci);
       const field = e.target.dataset.field;
       let value = e.target.value;
@@ -87,7 +87,14 @@ function bindCriteriaEvents() {
         const header = document.querySelector(`.criterion-item[data-criterion-index="${ci}"] .criterion-title`);
         if (header) header.textContent = value || 'Criterio sin título';
       }
-    });
+      if (field === 'maxScore') {
+        const badge = document.querySelector(`.criterion-item[data-criterion-index="${ci}"] .criterion-badge`);
+        const q = getActiveQuestion();
+        if (badge && q?.miniPoints?.[ci]) badge.textContent = `${q.miniPoints[ci].score || 0} / ${value}`;
+      }
+    };
+    el.addEventListener('input', handler);
+    if (el.tagName === 'SELECT') el.addEventListener('change', handler);
   });
 
   document.querySelectorAll('.delete-criterion-btn').forEach(btn => {

@@ -30,6 +30,8 @@ function renderVersions() {
             appState.projectData = v.projectData;
             markDirty();
             renderAll();
+          } else {
+            alert('Error al cargar la versión. Inténtalo de nuevo.');
           }
         }
       });

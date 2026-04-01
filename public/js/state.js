@@ -41,19 +41,21 @@ function markClean() {
   clearAutosaveTimer();
 }
 
-function updateSaveStatus(text) {
+function updateSaveStatus(text, statusClass) {
   const el = document.getElementById('saveStatus');
-  if (el) el.textContent = text;
+  if (!el) return;
+  el.textContent = text;
+  el.className = statusClass ? `status-${statusClass}` : '';
 }
 
 function scheduleAutosave() {
-  updateSaveStatus('Cambios sin guardar');
+  updateSaveStatus('Cambios sin guardar', 'dirty');
   clearAutosaveTimer();
   appState.autosaveTimer = setTimeout(async () => {
     if (appState.hasUnsavedChanges) {
       await triggerAutosave();
       const t = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-      updateSaveStatus(`Autoguardado a las ${t}`);
+      updateSaveStatus(`Autoguardado a las ${t}`, 'autosaved');
       markClean();
     }
   }, 25000);

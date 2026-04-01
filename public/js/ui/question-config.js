@@ -18,6 +18,7 @@ function renderQuestionConfig() {
 
   renderGeneralRules(question.generalRules || []);
   bindQuestionConfigEvents();
+  updateThresholdWarning(question);
 }
 
 function setValue(id, value) {
@@ -120,4 +121,32 @@ function handleQuestionFieldChange(e) {
 
   question[key] = value;
   markDirty();
+
+  if (key === 'maxScore' || key === 'threshold') {
+    updateThresholdWarning(question);
+  }
+}
+
+function updateThresholdWarning(question) {
+  const warningId = 'thresholdWarning';
+  let warning = document.getElementById(warningId);
+  const configGrid = document.querySelector('.config-grid');
+  if (!configGrid) return;
+
+  if (!warning) {
+    warning = document.createElement('div');
+    warning.id = warningId;
+    warning.className = 'validation-warning';
+    configGrid.appendChild(warning);
+  }
+
+  const maxScore = parseFloat(question.maxScore) || 0;
+  const threshold = parseFloat(question.threshold) || 0;
+
+  if (threshold > 0 && threshold >= maxScore) {
+    warning.textContent = `Aviso: el umbral mínimo (${threshold}) debe ser menor que la puntuación máxima (${maxScore}).`;
+    warning.style.display = 'block';
+  } else {
+    warning.style.display = 'none';
+  }
 }
