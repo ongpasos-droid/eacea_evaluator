@@ -22,6 +22,8 @@ async function saveCurrentProject() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const result = await response.json();
     markClean();
+    const t = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    updateSaveStatus(`Guardado a las ${t}`);
     console.log('Project saved at', result.updated_at);
     return true;
   } catch (error) {

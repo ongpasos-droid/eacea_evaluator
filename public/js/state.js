@@ -41,11 +41,20 @@ function markClean() {
   clearAutosaveTimer();
 }
 
+function updateSaveStatus(text) {
+  const el = document.getElementById('saveStatus');
+  if (el) el.textContent = text;
+}
+
 function scheduleAutosave() {
+  updateSaveStatus('Cambios sin guardar');
   clearAutosaveTimer();
-  appState.autosaveTimer = setTimeout(() => {
+  appState.autosaveTimer = setTimeout(async () => {
     if (appState.hasUnsavedChanges) {
-      saveCurrentProject();
+      await triggerAutosave();
+      const t = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      updateSaveStatus(`Autoguardado a las ${t}`);
+      markClean();
     }
   }, 25000);
 }
